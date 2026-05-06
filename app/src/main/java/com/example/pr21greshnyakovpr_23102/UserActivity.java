@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class UserActivity extends AppCompatActivity {
@@ -58,17 +59,30 @@ public class UserActivity extends AppCompatActivity {
 
     // Сохранение (добавление или обновление)
     public void save(View view) {
-        ContentValues cv = new ContentValues();
-        cv.put(DatabaseHelper.COLUMN_NAME, nameBox.getText().toString());
-        cv.put(DatabaseHelper.COLUMN_YEAR, Integer.parseInt(yearBox.getText().toString()));
+        String name = nameBox.getText().toString().trim();
+        String yearStr = yearBox.getText().toString().trim();
 
-        if (userId > 0) {
-            db.update(DatabaseHelper.TABLE, cv,
-                    DatabaseHelper.COLUMN_ID + "=" + userId, null);
-        } else {
-            db.insert(DatabaseHelper.TABLE, null, cv);
+        if (name.isEmpty() || yearStr.isEmpty()) {
+            Toast.makeText(this, "Заполните все поля!", Toast.LENGTH_SHORT).show();
+            return;
         }
-        goHome();
+
+        try {
+            int year = Integer.parseInt(yearStr);
+            ContentValues cv = new ContentValues();
+            cv.put(DatabaseHelper.COLUMN_NAME, name);
+            cv.put(DatabaseHelper.COLUMN_YEAR, year);
+
+            if (userId > 0) {
+                db.update(DatabaseHelper.TABLE, cv,
+                        DatabaseHelper.COLUMN_ID + "=" + userId, null);
+            } else {
+                db.insert(DatabaseHelper.TABLE, null, cv);
+            }
+            goHome();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Год должен быть числом!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Удаление
@@ -84,5 +98,6 @@ public class UserActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+        finish(); // Добавим finish(), чтобы убрать UserActivity из стека
     }
 }
