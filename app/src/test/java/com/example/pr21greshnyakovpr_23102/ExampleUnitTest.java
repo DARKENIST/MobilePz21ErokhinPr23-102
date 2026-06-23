@@ -1,4 +1,4 @@
-package com.example.pr21greshnyakovpr_23102;
+package com.example.mobilepz21erokhinpr23_102;
 
 import org.junit.Test;
 

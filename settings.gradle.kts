@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PR21GreshnyakovPr-23.102"
+rootProject.name = "MobilePz21ErokhinPr23-102"
 include(":app")
  
