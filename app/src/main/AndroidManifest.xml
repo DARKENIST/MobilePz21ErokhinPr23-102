@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PR21GreshnyakovPr23102">
+        android:theme="@style/Theme.MobilePz21ErokhinPr23_102">
         <activity
             android:name=".MainActivity"
             android:exported="true">
